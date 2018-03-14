@@ -1,9 +1,9 @@
 # This tool is designed to utilize Arista eAPI in order to make json requests
 # and parse responses
-# Main functionality includes listing active port mirroring sessions, stoping
+# Main functionality includes listing active port mirroring sessions, stopping
 # them and creating new
 
-# Additional functionality in v2 is automated switching of the range of source ports
+# Additional functionality is automated switching of the range of source ports
 
 # Normally a dedicated username with privelege level 15 is recommended
 # Auto-enable on login for this user is REQUIRED!
@@ -27,16 +27,19 @@ class connected_label(object):
     def __init__(self):
         # Init sets a label visibility to False upon creation
         self.is_visible = False
+        self.is_connected = False
 
     def connected(self):
         # Basic switch info is displayed when connected
         self.status_bar = Label(main_window, bg='green', font='Arial 10', text='Connected to: {} at {}'.format(
             switch.switch_hostname['result'][0]['hostname'], switch.ip_addr), bd=1, relief=SUNKEN, anchor=CENTER)
+        self.is_connected = True
 
     def not_connected(self):
          # if not connected - error displayed
         self.status_bar = Label(main_window, bg='red', font='Arial 10',
                                 text='Connection error, check parameters!', bd=1, relief=SUNKEN, anchor=CENTER)
+        self.is_connected = False
 
     def display_label(self):
         # checks if the label is visible, destroys label when info is refreshed
@@ -45,6 +48,9 @@ class connected_label(object):
         else:
             self.status_bar.grid(row=7, columnspan=5, sticky=N+S+E+W)
             self.is_visible = True
+
+
+connected = connected_label()
 
 
 class connect_to_switch(object):
@@ -62,7 +68,7 @@ class connect_to_switch(object):
             transport='https', host=self.ip_addr, username=self.username, password=self.password, port=None)
 
         # label object created with "not connected" default state
-        connected = connected_label()
+        
         connected.not_connected()
 
         # As there is no usable way to parse connection errors on initiation state,
@@ -142,10 +148,6 @@ class monitor_sessions(object):
 # "empty" monitor sessions object is created at the beggining
 current_sessions = monitor_sessions()
 
-
-def monitor_sessions_list():
-    # Proxy function fpr the GUI button "refresh session list"
-    current_sessions.refresh_list()
 
 
 class new_monitor_session(object):
@@ -283,63 +285,91 @@ class new_automated_session(object):
                 'Error', 'No active sessions with this name! \n Check your input!')
 
 
+def monitor_sessions_list():
+    # Proxy function for the GUI button "refresh session list"
+    if connected.is_connected == True:
+        current_sessions.refresh_list()
+    else:
+        tkinter.messagebox.showerror('Error', 'Connect to the switch first!')
+
+
 def tx_session_creation():
     # Proxy function for TX only new session GUI button
-    new_session = new_monitor_session()
-    new_session.tx_session_source()
-    new_session.destination()
-    monitor_sessions_list()
+    if connected.is_connected == True:
+        new_session = new_monitor_session()
+        new_session.tx_session_source()
+        new_session.destination()
+        monitor_sessions_list()
+    else:
+        tkinter.messagebox.showerror('Error', 'Connect to the switch first!')
 
 
 def rx_session_creation():
     # Proxy function for TX only new session GUI button
-    new_session = new_monitor_session()
-    new_session.rx_session_source()
-    new_session.destination()
-    monitor_sessions_list()
+    if connected.is_connected == True:
+        new_session = new_monitor_session()
+        new_session.rx_session_source()
+        new_session.destination()
+        monitor_sessions_list()
+    else:
+        tkinter.messagebox.showerror('Error', 'Connect to the switch first!')
 
 
 def duplex_session_creation():
     # Proxy function for TX only new session GUI button
-    new_session = new_monitor_session()
-    new_session.duplex_session_source()
-    new_session.destination()
-    monitor_sessions_list()
+    if connected.is_connected == True:
+        new_session = new_monitor_session()
+        new_session.duplex_session_source()
+        new_session.destination()
+        monitor_sessions_list()
+    else:
+        tkinter.messagebox.showerror('Error', 'Connect to the switch first!')
 
 
 def kill_monitor_session():
     # Function to stop any active session
     # Session name is received from the text field
+    if connected.is_connected == True:
 
-    session_to_kill = remove_session_name.get()
-    try:
-        switch.connected_switch.execute(
-            ['configure terminal', 'no monitor session {}'.format(session_to_kill)])
+        session_to_kill = remove_session_name.get()
+        try:
+            switch.connected_switch.execute(
+                ['configure terminal', 'no monitor session {}'.format(session_to_kill)])
 
-    except:
-        # If the command was unsuccesfull error pop up is displayed
-        tkinter.messagebox.showerror(
-            'Error', 'No active sessions with this name! \n Check your input!')
-    finally:
-        # Sessions list is updated
+        except:
+            # If the command was unsuccesfull error pop up is displayed
+            tkinter.messagebox.showerror(
+                'Error', 'No active sessions with this name! \n Check your input!')
+        finally:
+            # Sessions list is updated
 
-        monitor_sessions_list()
+            monitor_sessions_list()
+    else:
+        tkinter.messagebox.showerror('Error', 'Connect to the switch first!')
 
 
 automated_session = new_automated_session()
 
 
 def start_duplex_automation():
-    automated_session.initiate()
-    automated_session.duplex_session_source()
-    automated_session.destination()
-    monitor_sessions_list()
+    # Proxy function for automated session GUI button
+    if connected.is_connected == True:
+        automated_session.initiate()
+        automated_session.duplex_session_source()
+        automated_session.destination()
+        monitor_sessions_list()
+    else:
+        tkinter.messagebox.showerror('Error', 'Connect to the switch first!')
 
 
 def next_automated():
-    automated_session.next_port()
-    automated_session.destination()
-    monitor_sessions_list()
+    # Proxy function for next port GUI button
+    if connected.is_connected == True:
+        automated_session.next_port()
+        automated_session.destination()
+        monitor_sessions_list()
+    else:
+        tkinter.messagebox.showerror('Error', 'Connect to the switch first!')
 
 
 #*******************************GUI PART***************************************
@@ -498,7 +528,7 @@ sessions_list_button.grid(row=22, columnspan=3)
 # Main text output filed
 
 output_scroll = Scrollbar(main_window)
-output_text = Text(main_window, height=37, width=40)
+output_text = Text(main_window, height=37, width=48)
 output_scroll.grid(row=1, rowspan=35, column=6)
 output_text.grid(row=1, rowspan=35, column=5)
 output_scroll.config(command=output_text.yview)
@@ -506,12 +536,15 @@ output_text.config(yscrollcommand=output_scroll.set)
 
 
 output_text.insert(END, """
-This tool is designed to utilize Arista eAPI in order to make json requests
-and parse responses
-Main functionality includes listing active port mirroring sessions, stoping
-them and creating new
+README FIRST:
 
-Additional functionality in v2 is automated switching of the range of source ports
+This tool is designed to utilize Arista eAPI in order to make json
+requests and parse responses
+Main functionality includes listing active port mirroring sessions,
+stopping them and creating new
+
+Additional functionality in v2 is automated switching of the range
+of source ports
 
 Normally a dedicated username with privelege level 15 is recommended
 Auto-enable on login for this user is REQUIRED!
@@ -520,6 +553,22 @@ https://eos.arista.com/forum/how-do-i-enable-configure-commands-via-http-api/
 pyinstaller can be used to bake a handy executable file
 first install it using pip, then:
 pyinstaller -w -F [pythonfile.py]
+
+  	
+Copyright 2018 Ievgen Kostiukevych
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
 """)
 
 #**************************AUTOMATED SWITCHING*********************************
