@@ -538,37 +538,34 @@ output_text.config(yscrollcommand=output_scroll.set)
 output_text.insert(END, """
 README FIRST:
 
-This tool is designed to utilize Arista eAPI in order to make json
-requests and parse responses
-Main functionality includes listing active port mirroring sessions,
-stopping them and creating new
+This tool is designed to utilize Arista eAPI
 
-Additional functionality in v2 is automated switching of the range
-of source ports
-
-Normally a dedicated username with privelege level 15 is recommended
+Normally a dedicated username with privelege
+level 15 is recommended
 Auto-enable on login for this user is REQUIRED!
+
+How to do it? See:
 https://eos.arista.com/forum/how-do-i-enable-configure-commands-via-http-api/
 
-pyinstaller can be used to bake a handy executable file
-first install it using pip, then:
-pyinstaller -w -F [pythonfile.py]
-
-  	
+            
 Copyright 2018 Ievgen Kostiukevych
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
+Licensed under the Apache License, Version 2.0
+(the "License");
+you may not use this file except in compliance
+with the License.
 You may obtain a copy of the License at
 
 http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
+Unless required by applicable law or agreed to
+in writing, software distributed under the
+License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+either express or implied.
+See the License for the specific language
+governing permissions and limitations
+under the License.
 """)
 
 #**************************AUTOMATED SWITCHING*********************************
