@@ -38,9 +38,7 @@ class connect_to_switch(object):
         self.connected_switch = pyeapi.connect(
             transport='https', host=self.ip_addr, username=self.username, password=self.password, port=None)
 
-        # label object created with "not connected" default state
-        
-        
+       
 
         # As there is no usable way to parse connection errors on initiation state,
         # connection status is checked by executing simple "show hostname" command.
@@ -412,12 +410,13 @@ class MainApplication(tk.Frame):
 
     def display_label(self):
         # checks if the label is visible, destroys label when info is refreshed
-        if self.label_is_visible == True:
-            self.status_bar.destroy()
-            
-        else:
+        try:
+            self.status_bar.tk.destroy()
+        except:
+            pass
+        finally:
             self.status_bar.grid(row=7, columnspan=5, sticky=tk.N+tk.S+tk.E+tk.W)
-            self.label_is_visible = True       
+         
 
     def new_section_section(self):
         # Section title
