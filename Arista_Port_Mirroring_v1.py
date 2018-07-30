@@ -5,7 +5,7 @@
 
 # Additional functionality is automated switching of the range of source ports
 
-# Normally a dedicated username with privelege level 15 is recommended
+# User with privelege level 2 or higher is required.
 # Auto-enable on login for this user is REQUIRED!
 # https://eos.arista.com/forum/how-do-i-enable-configure-commands-via-http-api/
 
