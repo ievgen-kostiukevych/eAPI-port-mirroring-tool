@@ -11,6 +11,7 @@ Ports assigned to other monitoring sessions are skipped.
 
 ## Requirements:
 Python3
+
 pyeapi (pip install pyeapi)
 
 ## Switch requirements:
