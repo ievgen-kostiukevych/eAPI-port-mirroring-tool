@@ -1,7 +1,7 @@
 # This tool is designed to utilize Arista eAPI in order to make json requests
 # and parse responses
 # Main functionality includes listing active port mirroring sessions, stopping
-# them and creating new
+# them and creating new 
 
 # Additional functionality is automated switching of the range of source ports
 
