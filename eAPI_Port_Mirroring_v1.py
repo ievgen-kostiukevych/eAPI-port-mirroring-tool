@@ -5,7 +5,7 @@
 
 # Additional functionality is automated switching of the range of source ports
 
-# Normally a dedicated username with privelege level 15 is recommended
+# User with privelege level 2 or higher is required.
 # Auto-enable on login for this user is REQUIRED!
 # https://eos.arista.com/forum/how-do-i-enable-configure-commands-via-http-api/
 
@@ -497,15 +497,15 @@ README FIRST:
 
 This tool is designed to utilize Arista eAPI
 
-Normally a dedicated username with privelege
-level 15 is recommended
+User with privelege level >= 2 is required.
 Auto-enable on login for this user is REQUIRED!
-
 How to do it? See:
+
 https://eos.arista.com/forum/how-do-i-enable-configure-commands-via-http-api/
 
             
 Copyright 2018 Ievgen Kostiukevych
+https://github.com/ievgen-kostiukevych
 
 Licensed under the Apache License, Version 2.0
 (the "License");
