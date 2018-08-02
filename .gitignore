@@ -3,6 +3,3 @@
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-./GUI.py
-./main_FINALL.py
-./main_OLD.py
