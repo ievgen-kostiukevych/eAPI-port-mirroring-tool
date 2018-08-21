@@ -203,11 +203,9 @@ class new_automated_session(object):
         try:
             switch.connected_switch.execute(
                 ['configure terminal', 'no monitor session {}'.format(self.new_session_name)])
-
         except:
-            # If the command was unsuccesfull error pop up is displayed
-            tkinter.messagebox.showerror(
-                'Error', 'No active sessions with this name! \n Check your input!')
+           pass
+           
         # Class creates a list of source ports to go through from user input fields
         self.index = 0
         self.list_of_ports = main_app.user_list_of_ports.get()
