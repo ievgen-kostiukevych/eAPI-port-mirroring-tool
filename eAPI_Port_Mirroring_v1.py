@@ -198,17 +198,26 @@ class new_monitor_session(object):
 class new_automated_session(object):
 
     def initiate(self):
+        self.new_session_name = main_app.user_session_name_automate.get()
+                # Stops session for current ports
+        try:
+            switch.connected_switch.execute(
+                ['configure terminal', 'no monitor session {}'.format(self.new_session_name)])
+
+        except:
+            # If the command was unsuccesfull error pop up is displayed
+            tkinter.messagebox.showerror(
+                'Error', 'No active sessions with this name! \n Check your input!')
         # Class creates a list of source ports to go through from user input fields
         self.index = 0
-        self.new_session_name = main_app.user_session_name_automate.get()
-        self.first_source_port_number = main_app.start_user_source_port.get()
-#        self.last_source_port_number = int(main_app.end_user_source_port.get())
+        self.list_of_ports = main_app.user_list_of_ports.get()
         self.destination_port_number = main_app.user_destination_port_automate.get()
         self.port_range = []
-        for port in self.first_source_port_number.split(','):
+        for port in self.list_of_ports.split(','):
             self.port_range.append(port)
 
         self.current_port = self.port_range[self.index]
+
 
     def next_port(self):
         # goes through the ports list, kills currents session, initiates session creation for next port
@@ -539,24 +548,13 @@ under the License.
         self.user_session_name_automate.grid(row=24, column=1)
 
         # Start source port label and text field
-        self.start_source_port_label = tk.Label(self.master, text='First source port', font='Arial 10')
+        self.start_source_port_label = tk.Label(self.master, text='List of source ports', font='Arial 10')
         self.start_source_port_label.grid(row=25, column=0, sticky=tk.E)
 
-        self.start_user_source_port = tk.Entry(self.master, font='Arial 10')
-        self.start_user_source_port.grid(row=25, column=1)
-
-
-        # End source port label and text field
-
-        self.end_source_port_label = tk.Label(self.master, text='Last source port', font='Arial 10')
-        self.end_source_port_label.grid(row=26, column=0, sticky=tk.E)
-
-        self.end_user_source_port = tk.Entry(self.master, font='Arial 10')
-        self.end_user_source_port.grid(row=26, column=1)
-
+        self.user_list_of_ports = tk.Entry(self.master, font='Arial 10')
+        self.user_list_of_ports.grid(row=25, column=1)
 
         # Destination port label and text field
-
         self.destination_port_label_automate = tk.Label(self.master, text='Destination port', font='Arial 10')
         self.destination_port_label_automate.grid(row=27, column=0, sticky=tk.E)
 
