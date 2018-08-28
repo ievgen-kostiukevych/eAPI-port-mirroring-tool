@@ -192,17 +192,18 @@ class new_monitor_session(object):
 
 
 class new_automated_session(object):
+    # Class creates a list of source ports to cycle through from user input field
 
     def initiate(self):
+        # Stops a session with given name if active
         self.new_session_name = main_app.user_session_name_automate.get()
-        # Stops session for current ports
+
         try:
             switch.connected_switch.execute(
                 ['configure terminal', 'no monitor session {}'.format(self.new_session_name)])
         except:
             pass
 
-        # Class creates a list of source ports to go through from user input fields
         self.index = 0
         self.list_of_ports = main_app.user_list_of_ports.get()
         self.destination_port_number = main_app.user_destination_port_automate.get()
