@@ -126,8 +126,13 @@ class new_monitor_session(object):
 
     def tx_session_source(self):
         # Assigns a TX only source port to the session
-        # The checks are made is the source port is already in use and if the input field is empty
-        if 'Ethernet' + self.source_port_number in current_sessions.used_source_ports or 'Ethernet' + self.source_port_number in current_sessions.used_destination_ports:
+        # The checks are made is the source port is already in use, if the input field is empty and if there are spaces in a session name
+
+        if ' ' in self.new_session_name:
+            tkinter.messagebox.showwarning(
+                'Error', 'Monitor name cannot contain spaces!')
+
+        elif 'Ethernet' + self.source_port_number in current_sessions.used_source_ports or 'Ethernet' + self.source_port_number in current_sessions.used_destination_ports:
             tkinter.messagebox.showwarning(
                 'Warning', 'Source port already in use! \n Only destination port assigned!')
 
@@ -142,8 +147,12 @@ class new_monitor_session(object):
 
     def rx_session_source(self):
         # Assigns a RX only source port to the session
-        # The checks are made is the source port is already in use and if the input field is empty
-        if 'Ethernet' + self.source_port_number in current_sessions.used_source_ports or 'Ethernet' + self.source_port_number in current_sessions.used_destination_ports:
+        # The checks are made is the source port is already in use, if the input field is empty and if there are spaces in a session name
+        if ' ' in self.new_session_name:
+            tkinter.messagebox.showwarning(
+                'Error', 'Monitor name cannot contain spaces!')
+
+        elif 'Ethernet' + self.source_port_number in current_sessions.used_source_ports or 'Ethernet' + self.source_port_number in current_sessions.used_destination_ports:
             tkinter.messagebox.showwarning(
                 'Warning', 'Source port already in use! \n Only destination port assigned!')
 
@@ -159,8 +168,12 @@ class new_monitor_session(object):
 
     def duplex_session_source(self):
         # Assigns a duplex source port to the session
-        # The checks are made is the source port is already in use and if the input field is empty
-        if 'Ethernet' + self.source_port_number in current_sessions.used_source_ports or 'Ethernet' + self.source_port_number in current_sessions.used_destination_ports:
+        # The checks are made is the source port is already in use, if the input field is empty and if there are spaces in a session name
+        if ' ' in self.new_session_name:
+            tkinter.messagebox.showwarning(
+                'Error', 'Monitor name cannot contain spaces!')
+
+        elif 'Ethernet' + self.source_port_number in current_sessions.used_source_ports or 'Ethernet' + self.source_port_number in current_sessions.used_destination_ports:
             tkinter.messagebox.showwarning(
                 'Warning', 'Source port already in use! \n Only destination port assigned!')
 
