@@ -31,6 +31,6 @@ pyeapy module is Copyright (c) 2015, Arista Networks EOS+ All rights reserved.
 Please refer to [Arista eAPI](https://github.com/arista-eosplus/pyeapi) for license details.
 
 ## Disclaimers:
-As per Apache 2.0 license, the software is provided "As is", WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND.
+The software is provided "As is", WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND.
 Use at your own risk.
 Lab testing is ALWAYS recomended before any use for production network.
