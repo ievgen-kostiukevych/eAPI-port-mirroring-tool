@@ -25,7 +25,7 @@ first install it using pip, then:
 pyinstaller -w -F [pythonfile.py]
 
 ## License:
-The tool is licensed with [Apache 2.0](LICENSE)
+The tool is licensed with [MIT](LICENSE) license
 
 pyeapy module is Copyright (c) 2015, Arista Networks EOS+ All rights reserved.
 Please refer to [Arista eAPI](https://github.com/arista-eosplus/pyeapi) for license details.
